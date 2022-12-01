@@ -125,7 +125,7 @@ const HealthChkSub = ({route}) => {
    
     const values = await AsyncStorage.getItem('cartItem');
     const count = JSON.parse(values).length
-
+//  console.log("hello")
     
     setCount(count)
   
