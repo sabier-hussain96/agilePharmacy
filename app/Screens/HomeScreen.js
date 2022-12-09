@@ -213,7 +213,7 @@ const HomeScreen = () => {
                                 brand: item.brand
                             })}>
                                 <Image source={item.photo} style={{ width: 180, height: 230, resizeMode: "contain" }} />
-                                <Text style={{ fontFamily: "NotoSans-Bold", fontSize: 15,textAlign:"center" }}>{item.brand}</Text>
+                                <Text style={{ fontFamily: "NotoSans-Bold", fontSize: 15,textAlign:"center",color:isDark?'#FFFFFF':'#000000' }}>{item.brand}</Text>
                             </TouchableOpacity>
                         </View>
                     )}

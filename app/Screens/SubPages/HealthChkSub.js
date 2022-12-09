@@ -156,7 +156,7 @@ const HealthChkSub = ({ route }) => {
                 <View style={{ height: 250, width: 175, borderRadius: 3, backgroundColor: "#DFEAFF", flex: 1, flexDirection: "column", padding: 10 }}>
 
                   <View style={{ flex: 1 }}>
-                    <Text style={AppStyleSheet.subcatText}>{item.title}</Text>
+                    <Text style={[AppStyleSheet.subcatText,{color:"#000000"}]}>{item.title}</Text>
                     <View style={{ paddingTop: 10, borderColor: "#000000" }}>
                       <Image source={{ uri: item.images[0] }} style={{ width: 150, height: 100, resizeMode: "contain" }} />
                     </View>
@@ -167,7 +167,7 @@ const HealthChkSub = ({ route }) => {
                   <View style={{ flex: 2, justifyContent: "flex-end" }}>
                     <View style={{ flexDirection: "row" }}>
                       <View style={[AppStyleSheet.tagView]}>
-                        <Text style={{ color: "#FFFFFF", fontFamily: "NotoSans-Bold", textAlign: "center" }}>{item.discountPercentage} %</Text>
+                        <Text style={{ color: "#FFFFFF", fontFamily: "NotoSans-Bold", textAlign: "center",color:isDark? '#FFFFFF':"#FFFFFF" }}>{item.discountPercentage} %</Text>
                       </View>
                       <View style={{ marginTop: -1 }}>
                         <Image source={require('../../../assets/Images/zigzap.png')} />
@@ -175,7 +175,7 @@ const HealthChkSub = ({ route }) => {
                     </View>
 
                     <View style={{ flexDirection: "row", marginTop: 5 }}>
-                      <Text style={AppStyleSheet.subcatPrice}>₹{item.price}</Text>
+                      <Text style={[AppStyleSheet.subcatPrice,{color:"#000000"}]}>₹{item.price}</Text>
                       {/* <Text style={{ textDecorationLine: "line-through", paddingStart: 10, paddingTop: 4 }}>{item.price}</Text> */}
                     </View>
 
@@ -191,9 +191,6 @@ const HealthChkSub = ({ route }) => {
                   </View>
                 </View>
               </View>
-
-
-
             )}
           />
         </View>

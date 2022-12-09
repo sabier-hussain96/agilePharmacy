@@ -53,9 +53,9 @@ const CartItems = ({ route }) => {
           {/* <SearchIcon stroke="#000000" /> */}
 
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", backgroundColor: "#DFEAFF", height: 50, borderRadius: 30 }}>
-          <TouchableOpacity><Text style={{ textAlign: "center", paddingStart: 30, paddingTop: 15 }}>Medicine/HealthCare</Text></TouchableOpacity>
-          <TouchableOpacity><Text style={{ textAlign: "center", paddingStart: 30, paddingTop: 15, paddingEnd: 25 }}>Lab Tests</Text></TouchableOpacity>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", backgroundColor: "#DFEAFF", height: 50, borderRadius: 30,marginStart:10,marginEnd:10 }}>
+          <TouchableOpacity><Text style={{ textAlign: "center", paddingStart: 30, paddingTop: 15,color:"#000000" }}>Medicine/HealthCare</Text></TouchableOpacity>
+          <TouchableOpacity><Text style={{ textAlign: "center", paddingStart: 30, paddingTop: 15, paddingEnd: 25,color:"#000000"  }}>Lab Tests</Text></TouchableOpacity>
         </View>
       </View>
       {/* Body of the cart */}
