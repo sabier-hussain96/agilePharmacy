@@ -86,7 +86,7 @@ const LocationScreen = () => {
 
       <View style={{ marginTop: -50 }}>
         <View style={{ flexDirection: "row" }}>
-          <TextInput style={AppStyleSheet.locSearchTextInp} placeholder="Enter PIN Code"></TextInput>
+          <TextInput style={AppStyleSheet.locSearchTextInp} placeholder="Enter PIN Code" placeholderTextColor={isDark?"#FFFFFF":"#000000"}></TextInput>
           <TouchableOpacity style={{ backgroundColor: "#10847E", height: 50, width: 100, borderTopRightRadius: 8, borderBottomRightRadius: 8 }}><Text style={{ textAlign: "center", paddingTop: 13, color: "#FFFFFF", fontSize: 17 }}>Check</Text></TouchableOpacity>
         </View>
       </View>

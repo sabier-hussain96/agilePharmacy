@@ -131,7 +131,7 @@ const HomeScreen = () => {
                     <SearchIcon stroke="green" />
                 </View>
                 <TouchableOpacity style={{ marginStart: 15 }} onPress={getSearchView}>
-                    <TextInput placeholder='Search Products/medicines' style={{color:isDark?"#FFFFFF":"#000000"}}/>
+                    <TextInput placeholder='Search Products' placeholderTextColor={isDark?"#FFFFFF":"#000000"} style={{color:isDark?"#FFFFFF":"#000000"}}/>
                 </TouchableOpacity>
             </View>
 

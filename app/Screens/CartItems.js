@@ -81,7 +81,7 @@ const CartItems = ({ route }) => {
                     <Image source={require('../../assets/Images/careLinehand.png')} style={{ height: 30, width: 30, resizeMode: "contain" }} />
                   </View>
                   <View style={{ paddingStart: 10, paddingEnd: 10, width: 270 }}><Text style={{ fontSize: 14, color:isDark?'#FFFFFF':'#000000' }}>{item.Text}</Text></View>
-                  <View style={{ paddingStart: 25 }}><TouchableOpacity onPress={() => deleteCart(item.id)}><Trashicon stroke="gray" /></TouchableOpacity></View>
+                  <View style={{ paddingStart: 25 }}><TouchableOpacity onPress={() => deleteCart(item.id)}><Trashicon stroke={isDark?'#FFFFFF':'gray'} /></TouchableOpacity></View>
                 </View>
                 <View style={{ paddingStart: 50, paddingEnd: 10, width: 270 }}><Text style={{ fontSize: 12 , color:isDark?'#FFFFFF':'#000000'}}>{item.description}</Text></View>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 10 }}>
