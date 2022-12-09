@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, FlatList, TextInput, TouchableOpacity, Image, Animated, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Dimensions, FlatList, TextInput, TouchableOpacity, Image, Animated, StyleSheet, ScrollView, useColorScheme } from 'react-native'
 import React, { useRef, useState, useEffect } from 'react'
 import { CartIcon } from '../../assets/Icons/CartIcon'
 import { DownIcon } from '../../assets/Icons/DownIcon'
@@ -8,18 +8,72 @@ import { useNavigation } from '@react-navigation/native'
 import { screenNames } from '../Constants/Constant'
 import { banner } from '../DummyData/Banner'
 import { advertise } from '../DummyData/Advertisement'
-import LabFlaskIcon from '../../assets/Icons/LabFlaskIcon'
-import { healthConcern } from '../DummyData/HealthConcernData'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
-
-
+import axios from 'axios'
 
 const HomeScreen = () => {
 
+ const CatgoriesImage =[
+        {
+            id:0,
+            pictures: require("../../assets/Images/Iphone9.png"),
+            name:"Iphone 9"
+        },
+        {
+            id:1,
+            pictures: require("../../assets/Images/IphoneX.png"),
+            name:"IphoneX"
+        },
+        {
+            id:2,
+            pictures: require("../../assets/Images/samGal.jpg"),
+            name:"Samsung"
+        },
+        {
+            id:3,
+            pictures: require("../../assets/Images/Oppo.jpg"),
+            name:"Oppo"
+        },
+        {
+            id:4,
+            pictures: require("../../assets/Images/huawei.webp"),
+            name:"Huawei"
+        }
+    ]
     const navigation = useNavigation();
     const getSearchView = () => {
         navigation.navigate(screenNames.Search_Screen);
+    }
+
+    useEffect(() => {
+        getCategories()
+    }, [])
+    // fetching the products using API and categorizing.
+    const [Products, setProducts] = useState([])
+    
+    const getCategories = async () => {
+        try {
+            const response = await axios.get("https://dummyjson.com/products")
+            const jsonArr = (response.data.products)
+            const dummy = []
+            for (var i = 0; i < jsonArr.length; i++) {
+                    if (jsonArr[i].category === "smartphones") {
+                        if(jsonArr[i].brand !== jsonArr[i+1].brand){
+                            const repo ={
+                                id:jsonArr[i].id,
+                                text:jsonArr[i].title,
+                                brand:jsonArr[i].brand,
+                                photo:CatgoriesImage[i].pictures
+        
+                            }
+                            dummy.push(repo)
+                        }
+                    }
+            }
+            setProducts(dummy)
+        } catch (error) {
+            console.log(error)
+        }
+
     }
     // Auto scrolling 
     useEffect(() => {
@@ -45,37 +99,24 @@ const HomeScreen = () => {
     const [badge, Setbadge] = useState("")
     const scrollRef = useRef(null)
 
-    // Calling Sub Categories
-    const token = [];
-    const subCat = (healthConcern) => {
-        navigation.navigate(screenNames.Health_SubCat)
-    }
-
-    useEffect(() => {
-        // const badges = async () => {
-        //     const values = await AsyncStorage.getItem('cartItem');
-        //     const count = JSON.parse(values).length
-        //     console.log("Getting the number of elements " + count)
-        //     Setbadge(count)
-
-        // }
-        // badges();
-
-    }, [])
-
-
+    const colorScheme = useColorScheme();
+    const isDark = colorScheme === 'dark'
+    const color = isDark ? '#f1f1f1' : '#333'
+    
+    
+  
     return (
-        <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 70,backgroundColor:isDark? '#212121':"#E0F2F1" }}>
             {/* Header part  */}
             <View style={{ margin: 10 }}>
                 <View style={AppStyleSheet.Homeheader} >
                     <View>
-                        <Text style={{ fontFamily: 'NotoSans-Regular', textAlign: 'center' }}>Express delivery to</Text>
+                        <Text style={{ fontFamily: 'NotoSans-Regular', textAlign: 'center', color:isDark?'#FFFFFF':'#000000' }}>Express delivery to</Text>
                         <TouchableOpacity onPress={() => {
                             navigation.navigate(screenNames.Location_Screen)
                         }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontFamily: 'NotoSans-Regular', fontSize: 16, fontWeight: "bold" }}>560001,Bengaluru</Text>
+                                <Text style={{ fontFamily: 'NotoSans-Regular', fontSize: 16, fontWeight: "bold",  color:isDark?'#FFFFFF':'#000000' }}>560001,Bengaluru</Text>
                                 <DownIcon stroke='black' />
                             </View>
                         </TouchableOpacity>
@@ -90,7 +131,7 @@ const HomeScreen = () => {
                     <SearchIcon stroke="green" />
                 </View>
                 <TouchableOpacity style={{ marginStart: 15 }} onPress={getSearchView}>
-                    <TextInput placeholder='Search Products/medicines' />
+                    <TextInput placeholder='Search Products/medicines' style={{color:isDark?"#FFFFFF":"#000000"}}/>
                 </TouchableOpacity>
             </View>
 
@@ -105,7 +146,7 @@ const HomeScreen = () => {
                     renderItem={({ item }) => (
                         <View key={item.id} style={{ justifyContent: "space-between", marginStart: 10 }}>
                             <Image source={item.image} style={{ width: 80, height: 80, borderRadius: 20 }} />
-                            <Text style={{ textAlign: "center", marginTop: 10, fontFamily: "NotoSans-Bold" }}>{item.name}</Text>
+                            <Text style={{ textAlign: "center", marginTop: 10, fontFamily: "NotoSans-Bold",  color:isDark?'#FFFFFF':'#000000' }}>{item.name}</Text>
                         </View>
                     )}
                 />
@@ -154,31 +195,30 @@ const HomeScreen = () => {
             {/* Grid Style FlatList showing data in multiple rows and columns */}
 
             <View style={AppStyleSheet.Viewflaskicon}>
-                <LabFlaskIcon stroke="blue" />
-                <Text style={AppStyleSheet.specialHeading}>Lab Tests by Health Concern</Text>
-                {/* For multiple rows in horizantal flatlist */}
-
-
-
+                {/* <LabFlaskIcon stroke="blue" /> */}
+                <Text style={[AppStyleSheet.specialHeading,{color:isDark?'#FFFFFF':'#000000'}]}>Products Categories</Text>
             </View>
-            <ScrollView horizontal>
+            {/* For multiple rows in horizantal flatlist */}
+            <View>
                 <FlatList
-                    data={healthConcern}
+                    horizontal
+                    data={Products}
                     bounces={false}
                     initialScrollIndex={0}
+                    showsHorizontalScrollIndicator={false}
                     pagingEnabled={true}
-                    numColumns={Math.floor(healthConcern.length / 2)}
-                    key={'#'}
-                    keyExtractor={item => "#" + item.id}
                     renderItem={({ item }) => (
                         <View style={{ justifyContent: "space-between", margin: 10 }}>
-                            <TouchableOpacity onPress={subCat}>
-                                <Image source={item.image} style={{ width: 140, height: 150, borderRadius: 5 }} />
+                            <TouchableOpacity onPress={() => navigation.replace(screenNames.Health_SubCat,{
+                                brand: item.brand
+                            })}>
+                                <Image source={item.photo} style={{ width: 180, height: 230, resizeMode: "contain" }} />
+                                <Text style={{ fontFamily: "NotoSans-Bold", fontSize: 15,textAlign:"center" }}>{item.brand}</Text>
                             </TouchableOpacity>
                         </View>
                     )}
                 />
-            </ScrollView>
+            </View>
         </ScrollView>
 
     )

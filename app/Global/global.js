@@ -94,7 +94,7 @@ export const AppStyleSheet = StyleSheet.create({
     //common header which can be added to all the headers to make it bold
     specialHeading:{
         fontFamily:"NotoSans-ExtraBold",
-        fontSize:15,
+        fontSize:18,
         textAlign:"center"
     },
     Viewflaskicon:{
@@ -145,8 +145,8 @@ export const AppStyleSheet = StyleSheet.create({
         paddingBottom:10
     },
     subcatText:{
-        fontFamily:"NotoSans-Bold",
-        fontSize:14
+        fontFamily:"NotoSans-RegularItalic",
+        fontSize:15
     },
     subcatPrice:{
         fontFamily:"NotoSans-Bold",
@@ -168,7 +168,7 @@ export const AppStyleSheet = StyleSheet.create({
         fontFamily:"NotoSans-Bold",
         fontSize:20,
         textAlign:"center",
-        paddingTop:5,
+        paddingTop:10,
         
     }
 

@@ -1,8 +1,8 @@
 import { HomeIcon } from "../../assets/Icons/HomeIcon";
-import { TouchableNativeFeedback,View,Text } from 'react-native'
-import { CartIcon } from "../../assets/Icons/CartIcon";
+import { TouchableNativeFeedback,View,Text} from 'react-native'
 import { ProfileIcon } from "../../assets/Icons/ProfileIcon";
 import{WishListIcon}  from "../../assets/Icons/WishListIcon";
+import NotificationIcon from "../../assets/Icons/NotificationIcon";
 
 export const screenNames = {
     DashBoard_Screen: `DashBoard`,
@@ -15,6 +15,7 @@ export const screenNames = {
     Search_Screen:`Search`,
     Location_Screen:`location`,
     Health_SubCat:`Health`,
+    Sub_Category:`Sub Category`,
     WISHLIST:`Wish`,
     CART_Screen:`Cart`,
     CART_Empty:`EmptyCart`,
@@ -23,11 +24,14 @@ export const screenNames = {
     Card_payment:`Card`,
     UPI_payment:`UPI payment`,
     NetBanking_payment:`NetBanking`,
-    Wallet_payment:`Wallet`
+    Wallet_payment:`Wallet`,
+    Booked_Appointment :`Booked_Appointments`,
+    Notification :`Notfication`
     
 
     
 }
+
 
 export const header_Shown = {
     headerShown: false,
@@ -51,6 +55,7 @@ const buttonNativeFeedback = ({ children, style, ...props }) => (
     </TouchableNativeFeedback>
 );
 
+
 export const HomeOptions = {
     headerShown: false,
     unmountOnBlur: true,
@@ -73,8 +78,8 @@ export const OrderOptions = {
         <View style={{  // centring Tab Button...
             justifyContent: "center", alignItems: "center", height: 40
         }}>
-            <CartIcon stroke={focused ? "#26A69A" : "#000000"} />
-            <Text style={{ color: focused ? "#26A69A" : "#000000", marginTop: 5, fontSize: 9, fontFamily: "NotoSans-Regular" }}>ORDERS</Text>
+            <NotificationIcon stroke={focused ? "#26A69A" : "#FFFFFF"} />
+            <Text style={{ color: focused ? "#26A69A" : "#FFFFFF", marginTop: 5, fontSize: 9, fontFamily: "NotoSans-Regular" }}>Notification</Text>
         </View>
     ),
 }

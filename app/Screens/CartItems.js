@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, useColorScheme } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import BackIcon from '../../assets/Icons/BackButton'
 import { useNavigation } from '@react-navigation/native'
@@ -10,60 +10,46 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
-const CartItems = () => {
-
+const CartItems = ({ route }) => {
+  const [Cartarray, setCartarray] = useState([])
   useEffect(() => {
 
-    const fetch = async () => {
-      const data = await AsyncStorage.getItem('cartItem');
-      if (data !== null) {
-        const values = JSON.parse(data)
-        setCartarray(values);
-        console.log(values)
-      }
-
-    }
-    fetch();
-
+    const { cart } = route?.params
+    console.log(cart)
+    setCartarray(cart)
   }, [])
-
-  const [Cartarray, setCartarray] = useState([])
-
   const deleteCart = async (fid) => {
     console.log(fid)
     let delArr = [];
-    console.log("inital cart ==== "+Cartarray)
     const newData = Cartarray.filter(item => item.id != fid)
     setCartarray(newData)
-    console.log(newData)
-    
-    await AsyncStorage.setItem('cartItem', JSON.stringify(newData),async()=>{
+    // console.log("displaying the length ====== "+newData.length)
+    await AsyncStorage.setItem('cartItem', JSON.stringify(newData), async () => {
       await AsyncStorage.mergeItem('cartItem', JSON.stringify(newData))
-    });
 
-    await AsyncStorage.setItem('Updatedarray', JSON.stringify(newData))
-    console.log(newData+"deleted array")
+    });
   };
 
   const navigation = useNavigation();
 
-  const category = () => {
-    navigation.navigate(screenNames.Home_Screen)
-  }
+  // const category = () => {
+  //   navigation.navigate(screenNames.Home_Screen)
+  // }
 
- 
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark'
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1,backgroundColor:isDark? '#000000':"#E0F2F1"}}>
       {/* header for Cart */}
       <View>
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity style={{ padding: 10 }} onPress={() => {
-            navigation.replace(screenNames.Health_SubCat)
-          }}>
-            <BackIcon stroke="black" />
+          <TouchableOpacity style={{ padding: 10 }} onPress={() => navigation.replace(screenNames.Health_SubCat, {
+            brand: route?.params.brand
+          })}>
+            <BackIcon stroke={isDark?"#FFFFFF":"#000000"}  />
           </TouchableOpacity>
-          <Text style={{ fontFamily: "NotoSans-Bold", fontSize: 25 }}>CART</Text>
+          <Text style={{ fontFamily: "NotoSans-Bold", fontSize: 25,color:isDark?'#FFFFFF':'#000000' }}>CART</Text>
           {/* <SearchIcon stroke="#000000" /> */}
 
         </View>
@@ -73,13 +59,13 @@ const CartItems = () => {
         </View>
       </View>
       {/* Body of the cart */}
-      <ScrollView style={{ paddingTop: 15,marginBotton:50 }}>
+      <ScrollView style={{ paddingTop: 15, marginBotton: 50 }}>
         {/* Advertisement part */}
         <View style={{ marginStart: 10, marginEnd: 10 }}>
           <Image source={require('../../assets/Images/amazon.jpg')} style={{ height: 70, width: "auto", resizeMode: "contain" }}></Image>
         </View>
         <View style={{ flexDirection: "row", marginTop: 20 }}>
-          <Text style={{ paddingStart: 10, margin: 10 }}>All tests fulfilled by</Text>
+          <Text style={{ paddingStart: 10, margin: 10, color:isDark?'#FFFFFF':'#000000' }}>All tests fulfilled by</Text>
           <View>
             <Image source={require('../../assets/Images/pharmeasy.png')} style={{ resizeMode: "cover", height: 50, width: 130, }}></Image>
           </View>
@@ -89,27 +75,28 @@ const CartItems = () => {
         {Cartarray.length !== 0 ?
           <>
             {Cartarray.map((item) => (
-              <View style={{ height: 130, width: "auto", borderRadius: 5, marginStart: 10, marginEnd: 10, marginTop: 20, borderColor: "EDF2F9 ", borderWidth: 0.5 }}>
+              <View key={item.id} style={{ height: 160, width: "auto", borderRadius: 5, marginStart: 10, marginEnd: 10, marginTop: 20, borderColor:isDark?"#FFFFFF": "EDF2F9 ", borderWidth: 0.5 }}>
                 <View style={{ flexDirection: 'row', padding: 10 }}>
                   <View>
                     <Image source={require('../../assets/Images/careLinehand.png')} style={{ height: 30, width: 30, resizeMode: "contain" }} />
                   </View>
-                  <View style={{ paddingStart: 10, paddingEnd: 10, width: 270 }}><Text style={{ fontSize: 14 }}>{item.Text}</Text></View>
+                  <View style={{ paddingStart: 10, paddingEnd: 10, width: 270 }}><Text style={{ fontSize: 14, color:isDark?'#FFFFFF':'#000000' }}>{item.Text}</Text></View>
                   <View style={{ paddingStart: 25 }}><TouchableOpacity onPress={() => deleteCart(item.id)}><Trashicon stroke="gray" /></TouchableOpacity></View>
                 </View>
-                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <View style={{ paddingStart: 50, paddingEnd: 10, width: 270 }}><Text style={{ fontSize: 12 , color:isDark?'#FFFFFF':'#000000'}}>{item.description}</Text></View>
+                <View style={{ flexDirection: "row", justifyContent: "space-between", paddingTop: 10 }}>
                   <View>
                     <View style={{ flexDirection: "row", paddingStart: 50 }}>
-                      <Text style={{ textDecorationLine: 'line-through' }}>{item.orgPrice}</Text>
-                      <Text style={{ paddingStart: 10, color: "red" }}>{item.tag}</Text>
+                      {/* <Text style={{ textDecorationLine: 'line-through' }}>{item.orgPrice}</Text> */}
+                      <Text style={{ color: "red" }}>{item.discount} %</Text>
                     </View>
                     <View style={{ paddingStart: 50, paddingTop: 10 }}>
-                      <Text style={{ fontSize: 15, fontWeight: "800" }}>{item.price}</Text>
+                      <Text style={{ fontSize: 15, fontWeight: "800", color:isDark?'#FFFFFF':'#000000' }}>₹{item.price}</Text>
                     </View>
                   </View>
-                  <View style={{ borderWidth: 1, height: 40, width: 100, marginEnd: 20, borderRadius: 10 }} >
+                  {/* <View style={{ borderWidth: 1, height: 40, width: 100, marginEnd: 20, borderRadius: 10 }} >
                     <TouchableOpacity><Text style={{ padding: 10, textAlign: "center" }}>1 Patient</Text></TouchableOpacity>
-                  </View>
+                  </View> */}
 
                 </View>
               </View>
@@ -130,7 +117,7 @@ const CartItems = () => {
 
           </>
         }
-       
+
         {/* Cart Details */}
         {/* {Cartarray.length !== 0 ?
           <>
@@ -163,7 +150,8 @@ const CartItems = () => {
           </> : null
         } */}
       </ScrollView>
-      <Text style={{ padding: 10,backgroundColor:"yellow"}}>Cashback will be added to wallet in 24 hrs of successful transaction</Text>
+      {/* footer part */}
+      <Text style={{ padding: 10, backgroundColor: "yellow" }}>Cashback will be added to wallet in 24 hrs of successful transaction</Text>
       <View style={{ borderWidth: 0.3, borderColor: "gray", height: 70, }}>
         <View style={{ flexDirection: 'row', justifyContent: "center" }}>
           {/* <View style={{padding:20}}><Text>{item.price}</Text></View> */}

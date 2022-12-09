@@ -20,7 +20,7 @@ const navigation = useNavigation();
   return (
     <View style={{flex:1, alignItems:'center',margin :'auto',backgroundColor:'#ADE4F7'}}>
       <Lottie source={require('../Global/pharmacy.json')} autoPlay loop style={{ height: 500, width: 500 }}></Lottie>
-      <Text style={{fontFamily:"NotoSans-ExtraBold",fontSize:25}}>AgilePharmacy</Text>
+      <Text style={{fontFamily:"NotoSans-ExtraBold",fontSize:25}}>Agile E-Commerce</Text>
       <Text style={{fontFamily:"NotoSans-Regular",fontSize:25,color:'orange'}}>Made in India.</Text>
     </View>
   )
