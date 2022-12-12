@@ -151,7 +151,7 @@ const CartItems = ({ route }) => {
         } */}
       </ScrollView>
       {/* footer part */}
-      <Text style={{ padding: 10, backgroundColor: "yellow" }}>Cashback will be added to wallet in 24 hrs of successful transaction</Text>
+      <Text style={{ padding: 10, backgroundColor: "yellow",color:"#000000" }}>Cashback will be added to wallet in 24 hrs of successful transaction</Text>
       <View style={{ borderWidth: 0.3, borderColor: "gray", height: 70, }}>
         <View style={{ flexDirection: 'row', justifyContent: "center" }}>
           {/* <View style={{padding:20}}><Text>{item.price}</Text></View> */}
